@@ -1,0 +1,3 @@
+Install below packages ******
+run  pip install openai --upgrade
+run pip install requests
