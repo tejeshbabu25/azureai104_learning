@@ -1,3 +1,4 @@
 Install below packages ******
 run  pip install openai --upgrade
 run pip install requests
+all about Content safety services can be found at https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text?tabs=visual-studio%2Cwindows&pivots=programming-language-rest
