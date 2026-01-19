@@ -3,17 +3,22 @@
 # to make a GET request to Google homepage, type the following line in the .rest file and click on "Send Request" above the line
 # which will show the response from the server in a new pane
 # application/octet-stream - for reading image from local machine
+# here we made use of image services to get caption,tags,objects of an image stored locally
 # GET https://www.google.com
 
 # to make a call to Azure Vision API , we would be using https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/quickstarts-sdk/image-analysis-client-library-40?tabs=visual-studio%2Cwindows&pivots=programming-language-rest-api documentation
 
-POST https://comvision-tej.cognitiveservices.azure.com/computervision/imageanalysis:analyze?features=caption&model-version=latest&language=en&api-version=2024-02-01
+ POST https://comvision-tej.cognitiveservices.azure.com/computervision/imageanalysis:analyze?features=caption&model-version=latest&language=en&api-version=2024-02-01
+# POST https://comvision-tej.cognitiveservices.azure.com/computervision/imageanalysis:analyze?features=tags&model-version=latest&language=en&api-version=2024-02-01
+# POST https://comvision-tej.cognitiveservices.azure.com/computervision/imageanalysis:analyze?features=objects&model-version=latest&language=en&api-version=2024-02-01
 Content-Type: application/octet-stream
 Ocp-Apim-Subscription-Key: api_key_here
 
 < ./sunset_from_moon.png
 
 # when we hit Send Request, we would get a response like below
+
+# ************ CAPTIONS RESPONSE ************
 # HTTP/1.1 200 OK
 # Content-Length: 156
 # Content-Type: application/json; charset=utf-8
@@ -40,5 +45,114 @@ Ocp-Apim-Subscription-Key: api_key_here
 #   "metadata": {
 #     "width": 1024,
 #     "height": 1024
+#   }
+# }
+
+# ************ TAGS RESPONSE ************
+# HTTP/1.1 200 OK
+# Content-Length: 563
+# Content-Type: application/json; charset=utf-8
+# request-id: 1355d81c-2a02-4f80-9150-4936d55f93d5
+# x-ms-request-id: 1355d81c-2a02-4f80-9150-4936d55f93d5
+# ms-vision-response-time-input-received: 8
+# ms-vision-response-time-input-processed: 168
+# api-supported-versions: 4.0-pre1,2022-07-31-preview,2022-10-12-preview,2023-02-01-preview,2023-04-01-preview,2023-06-01-preview,2023-07-01-preview,2023-10-01,2024-02-01,2024-08-01-preview
+# x-envoy-upstream-service-time: 172
+# CSP-Billing-Usage: CognitiveServices.ComputerVision.Transaction=1
+# apim-request-id: 1355d81c-2a02-4f80-9150-4936d55f93d5
+# Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+# x-content-type-options: nosniff
+# x-ms-region: East US
+# Date: Mon, 19 Jan 2026 21:17:59 GMT
+# Connection: close
+
+# {
+#   "modelVersion": "2023-10-01",
+#   "metadata": {
+#     "width": 1024,
+#     "height": 1024
+#   },
+#   "tagsResult": {
+#     "values": [
+#       {
+#         "name": "astronomical object",
+#         "confidence": 0.9596755504608154
+#       },
+#       {
+#         "name": "outer space",
+#         "confidence": 0.9555437564849854
+#       },
+#       {
+#         "name": "space",
+#         "confidence": 0.9477510452270508
+#       },
+#       {
+#         "name": "planet",
+#         "confidence": 0.9416138529777527
+#       },
+#       {
+#         "name": "sky",
+#         "confidence": 0.9274355173110962
+#       },
+#       {
+#         "name": "earth",
+#         "confidence": 0.9145050048828125
+#       },
+#       {
+#         "name": "universe",
+#         "confidence": 0.9045065641403198
+#       },
+#       {
+#         "name": "astronomy",
+#         "confidence": 0.8874696493148804
+#       },
+#       {
+#         "name": "nature",
+#         "confidence": 0.5046755075454712
+#       }
+#     ]
+#   }
+# }
+# ************ OBJECTS RESPONSE ************
+# HTTP/1.1 200 OK
+# Content-Length: 192
+# Content-Type: application/json; charset=utf-8
+# request-id: 6e95af7b-39cf-4d1d-8d54-2a5b8f7d5bf4
+# x-ms-request-id: 6e95af7b-39cf-4d1d-8d54-2a5b8f7d5bf4
+# ms-vision-response-time-input-received: 11
+# ms-vision-response-time-input-processed: 281
+# api-supported-versions: 4.0-pre1,2022-07-31-preview,2022-10-12-preview,2023-02-01-preview,2023-04-01-preview,2023-06-01-preview,2023-07-01-preview,2023-10-01,2024-02-01,2024-08-01-preview
+# x-envoy-upstream-service-time: 286
+# CSP-Billing-Usage: CognitiveServices.ComputerVision.Transaction=1
+# apim-request-id: 6e95af7b-39cf-4d1d-8d54-2a5b8f7d5bf4
+# Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+# x-content-type-options: nosniff
+# x-ms-region: East US
+# Date: Mon, 19 Jan 2026 21:19:10 GMT
+# Connection: close
+
+# {
+#   "modelVersion": "2023-10-01",
+#   "metadata": {
+#     "width": 1024,
+#     "height": 1024
+#   },
+#   "objectsResult": {
+#     "values": [
+#       {
+#         "boundingBox": {
+#           "x": 472,
+#           "y": 563,
+#           "w": 72,
+#           "h": 74
+#         },
+#         "tags": [
+#           {
+#             "name": "person",
+#             "confidence": 0.659
+#           }
+#         ]
+#       }
+#     ]
 #   }
 # }
