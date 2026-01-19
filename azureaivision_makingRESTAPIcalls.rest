@@ -1,0 +1,44 @@
+# this is to learn making REST API calls using REST Client extension in VS Code
+# once extension is installed,restart VS Code and create a new file with .rest extension
+# to make a GET request to Google homepage, type the following line in the .rest file and click on "Send Request" above the line
+# which will show the response from the server in a new pane
+# application/octet-stream - for reading image from local machine
+# GET https://www.google.com
+
+# to make a call to Azure Vision API , we would be using https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/quickstarts-sdk/image-analysis-client-library-40?tabs=visual-studio%2Cwindows&pivots=programming-language-rest-api documentation
+
+POST https://comvision-tej.cognitiveservices.azure.com/computervision/imageanalysis:analyze?features=caption&model-version=latest&language=en&api-version=2024-02-01
+Content-Type: application/octet-stream
+Ocp-Apim-Subscription-Key: api_key_here
+
+< ./sunset_from_moon.png
+
+# when we hit Send Request, we would get a response like below
+# HTTP/1.1 200 OK
+# Content-Length: 156
+# Content-Type: application/json; charset=utf-8
+# request-id: 4f53a2a6-e1e6-49db-8134-d336453f78a2
+# x-ms-request-id: 4f53a2a6-e1e6-49db-8134-d336453f78a2
+# ms-vision-response-time-input-received: 40
+# ms-vision-response-time-input-processed: 257
+# api-supported-versions: 4.0-pre1,2022-07-31-preview,2022-10-12-preview,2023-02-01-preview,2023-04-01-preview,2023-06-01-preview,2023-07-01-preview,2023-10-01,2024-02-01,2024-08-01-preview
+# x-envoy-upstream-service-time: 273
+# CSP-Billing-Usage: CognitiveServices.ComputerVision.Transaction=1
+# apim-request-id: 4f53a2a6-e1e6-49db-8134-d336453f78a2
+# Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+# x-content-type-options: nosniff
+# x-ms-region: East US
+# Date: Mon, 19 Jan 2026 20:09:55 GMT
+# Connection: close
+
+# {
+#   "modelVersion": "2023-10-01",
+#   "captionResult": {
+#     "text": "a planet earth and the moon",
+#     "confidence": 0.6489914655685425
+#   },
+#   "metadata": {
+#     "width": 1024,
+#     "height": 1024
+#   }
+# }
