@@ -1,0 +1,11 @@
+# This is to illustrate a sample Azure AI Video Indexer service interaction module.
+# log into videoindexer.ai/account/login with Azure credentials to get your account details.
+# once you upload a video you can get various insights and embed widgets in your application by clicking on editor option
+# and view insights options and choosing various widget options that it was able locate in the video.
+# This link https://learn.microsoft.com/en-us/azure/azure-video-indexer/video-indexer-embed-widgets 
+# has details about various widget types,insights widgets like people,keywords,emotions,topics etc
+# controls like download,share,transcript etc and how to embed them in your application.,show captopns
+
+
+# Azure AI Video Indexer - Customize Content model using https://learn.microsoft.com/en-us/azure/azure-video-indexer/customize-language-model-how-to?tabs=customizewebportal
+# documentation for brand model,laguage model,person model,global face grouping & speech model training and customization.
