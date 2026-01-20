@@ -3,3 +3,21 @@ run  pip install openai --upgrade
 run pip install requests
 all about Content safety services can be found at https://learn.microsoft.com/en-us/azure/ai-services/content-safety/quickstart-text?tabs=visual-studio%2Cwindows&pivots=programming-language-rest
 https://platform.openai.com/docs/api-reference/responses - for Openai response AI
+
+
+Implement NLP Solutions
+   1.  Azure AI Language service
+        - named entity recognition
+        - language
+        - Sentiment Analysis
+        - Summarization
+      # log into Azure AI Foundry - https://ai.azure.com using Azure credentials
+       - on Playgrounds select language Playground
+       - test out various language services offered
+      # on portal.azure.com , create a language service resource
+       - documentation on https://learn.microsoft.com/en-us/rest/api/language/ has details for creating REST api
+        - for example clicking API version , we can see Analyze test endpoint formats that can be used on
+          https://learn.microsoft.com/en-us/rest/api/language/analyze-text/analyze-text/analyze-text?view=rest-language-analyze-text-2024-11-01&tabs=HTTP
+        - 
+
+

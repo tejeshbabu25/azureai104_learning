@@ -1,0 +1,69 @@
+# using REST Client to call Azure AI Language Service - Analyze Text API
+# Python code can be found in azureailanguageservice_analyze_text.py file 
+# documentation on REST API can be found at https://learn.microsoft.com/en-us/rest/api/language/analyze-text/analyze-text/analyze-text?view=rest-language-analyze-text-2024-11-01&tabs=HTTP
+
+POST https://langser-tej.cognitiveservices.azure.com//language/:analyze-text?api-version=2024-11-01
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: api-key-here
+
+{
+  "analysisInput": {
+    "documents": [
+      {
+        "id": "1",
+        "text": "I love programming in Python! It's such a versatile language."
+      },
+      {
+        "id": "2",
+        "text": "Me gusta aprender nuevos idiomas y explorar diferentes culturas."
+      }
+    ]
+  },
+ "kind": "LanguageDetection"
+}
+
+# Response
+# HTTP/1.1 200 OK
+# Content-Length: 408
+# Content-Type: application/json; charset=utf-8
+# csp-billing-usage: CognitiveServices.TextAnalytics.Language.Text.LanguageDetection=2,CognitiveServices.TextAnalytics.TextRecords=2
+# x-envoy-upstream-service-time: 6
+# Set-Cookie: .AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly
+# apim-request-id: 77b4cc32-8606-4840-b37e-f1d1f6ef7dd9
+# Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+# x-content-type-options: nosniff
+# x-ms-region: East US
+# Date: Tue, 20 Jan 2026 01:15:08 GMT
+# Connection: close
+
+# {
+#   "kind": "LanguageDetectionResults",
+#   "results": {
+#     "documents": [
+#       {
+#         "id": "1",
+#         "warnings": [],
+#         "detectedLanguage": {
+#           "name": "English",
+#           "iso6391Name": "en",
+#           "confidenceScore": 0.98,
+#           "scriptName": "Latin",
+#           "scriptIso15924Code": "Latn"
+#         }
+#       },
+#       {
+#         "id": "2",
+#         "warnings": [],
+#         "detectedLanguage": {
+#           "name": "Spanish",
+#           "iso6391Name": "es",
+#           "confidenceScore": 1.0,
+#           "scriptName": "Latin",
+#           "scriptIso15924Code": "Latn"
+#         }
+#       }
+#     ],
+#     "errors": [],
+#     "modelVersion": "2024-11-01"
+#   }
+# }
