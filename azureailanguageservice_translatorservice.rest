@@ -1,0 +1,36 @@
+# This code is to learn about the Azure AI Language Service Translator Service using rest API.
+POST https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=it
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: api-key-goes-here
+Ocp-Apim-Subscription-Region: eastus
+
+[
+    {
+        "Text": "Hello, how are you?"
+    }
+]
+
+# Example Response
+# HTTP/1.1 200 OK
+# Date: Thu, 22 Jan 2026 01:10:37 GMT
+# Content-Type: application/json; charset=utf-8
+# Transfer-Encoding: chunked
+# Connection: close
+# access-control-expose-headers: X-RequestId,X-Metered-Usage,X-MT-System
+# x-requestid: 68e61067-cac7-4d4b-a3bd-196d97a9aca8.USW2.0122T0110
+# x-content-type-options: nosniff
+# x-metered-usage: 19
+# x-mt-system: Microsoft
+# x-envoy-upstream-service-time: 215
+# Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# [
+#   {
+#     "translations": [
+#       {
+#         "text": "Ciao come stai?",
+#         "to": "it"
+#       }
+#     ]
+#   }
+# ]
