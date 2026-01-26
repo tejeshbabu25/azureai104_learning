@@ -1,0 +1,1 @@
+This is to learn about Azure AI services using microphone for converting speech to text.
