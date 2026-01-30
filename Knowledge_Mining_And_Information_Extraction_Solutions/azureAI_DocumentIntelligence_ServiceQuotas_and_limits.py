@@ -1,0 +1,2 @@
+# This is about the Service quotas and limits on Document intelligence service
+# Documentation - https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/service-limits?view=doc-intel-4.0.0
