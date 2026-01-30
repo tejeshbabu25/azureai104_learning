@@ -14,7 +14,7 @@ key = "api-key-goes-here"
 documentUrl = "https://storageaccounttej.blob.core.windows.net/docintelstorage/Sample_Sentiment_Numbered_Only.pdf"
 
 lang_endpoint = "https://langser-tej.cognitiveservices.azure.com/"
-lang_key = "GE5MSikaeHzYiVTXz5TB3cbAeep2PoIN77TqRXxGXbFPiC41e726JQQJ99CAACYeBjFXJ3w3AAAaACOGuIfJ"
+lang_key = "api-key-goes-here"
 
 client = DocumentIntelligenceClient(endpoint=endpoint,credential=AzureKeyCredential(key))
 lang_client = TextAnalyticsClient(endpoint=lang_endpoint,credential=AzureKeyCredential(lang_key))
