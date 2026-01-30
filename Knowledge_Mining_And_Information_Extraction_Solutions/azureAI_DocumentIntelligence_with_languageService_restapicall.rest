@@ -1,0 +1,2639 @@
+# Documentation for this can be found at https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/quickstarts/get-started-sdks-rest-api?view=doc-intel-4.0.0&pivots=programming-language-rest-api
+
+# We are making use of the POST Request example for this sample
+
+# curl -v -i POST "{endpoint}/documentintelligence/documentModels/{modelId}:analyze?api-version=2024-11-30" -H "Content-Type: application/json" -H "Ocp-Apim-Subscription-Key: {key}" --data-ascii "{'urlSource': '{your-document-url}'}"
+
+# Below values are from Azure Portal for Document Intelligence resource
+# urlSource is one of the documents Url which is uploaded on storage account->containers location
+POST https://documentintel-tej.cognitiveservices.azure.com/documentintelligence/documentModels/prebuilt-layout:analyze?api-version=2024-11-30
+Content-Type: application/json
+Ocp-Apim-Subscription-Key: api-key-goes-here
+
+{
+    "urlSource": "https://storageaccounttej.blob.core.windows.net/docintelstorage/Sample_Sentiment_Numbered_Only.pdf"
+}
+
+# Expected Output
+# HTTP/1.1 202 Accepted
+# Content-Length: 0
+# Operation-Location: https://documentintel-tej.cognitiveservices.azure.com/documentintelligence/documentModels/prebuilt-layout/analyzeResults/e4dc8d12-3525-4a43-aa80-a9918d491c5a?api-version=2024-11-30
+# x-envoy-upstream-service-time: 150
+# apim-request-id: e4dc8d12-3525-4a43-aa80-a9918d491c5a
+# Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+# x-content-type-options: nosniff
+# x-ms-region: East US
+# Date: Fri, 30 Jan 2026 11:26:59 GMT
+# Connection: close
+
+# This request says accept , however not the response we expect, so we call the GET request and make use of the operation location from above response as the endpoint
+###
+GET https://documentintel-tej.cognitiveservices.azure.com/documentintelligence/documentModels/prebuilt-layout/analyzeResults/e4dc8d12-3525-4a43-aa80-a9918d491c5a?api-version=2024-11-30
+Ocp-Apim-Subscription-Key: api-key-goes-here
+
+# Now we get the document details
+# Expected output
+# HTTP/1.1 200 OK
+# Content-Length: 21922
+# Content-Type: application/json; charset=utf-8
+# x-envoy-upstream-service-time: 57
+# apim-request-id: 7e17ebcf-33d0-4657-bb5d-e76a049b4ef4
+# Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+# x-content-type-options: nosniff
+# x-ms-region: East US
+# Date: Fri, 30 Jan 2026 11:29:44 GMT
+# Connection: close
+
+# {
+#   "status": "succeeded",
+#   "createdDateTime": "2026-01-30T11:27:00Z",
+#   "lastUpdatedDateTime": "2026-01-30T11:27:02Z",
+#   "analyzeResult": {
+#     "apiVersion": "2024-11-30",
+#     "modelId": "prebuilt-layout",
+#     "stringIndexType": "textElements",
+#     "content": "1. I absolutely love how fast and responsive this application is.\n2. The user interface looks outdated and feels confusing to navigate.\n3. Customer support resolved my issue within minutes and was very polite.\n4. The product works as expected, but there is nothing particularly impressive about it.\n5. I am extremely disappointed with the frequent crashes and data loss.\n6. The onboarding experience was smooth and easy to follow.\n7. Pricing seems reasonable compared to other tools in the market.\n8. The latest update introduced several bugs that made things worse.\n9. Overall, the service meets basic requirements without any major issues.\n10. I would highly recommend this solution to teams looking for reliability and performance.",
+#     "pages": [
+#       {
+#         "pageNumber": 1,
+#         "angle": 0.02163323014974594,
+#         "width": 8.5,
+#         "height": 11,
+#         "unit": "inch",
+#         "words": [
+#           {
+#             "content": "1.",
+#             "polygon": [
+#               1.081,
+#               1.0992,
+#               1.1777,
+#               1.0992,
+#               1.1787,
+#               1.2622,
+#               1.0821,
+#               1.2622
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 0,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "I",
+#             "polygon": [
+#               1.2099,
+#               1.0992,
+#               1.2663,
+#               1.0991,
+#               1.2672,
+#               1.2622,
+#               1.2108,
+#               1.2622
+#             ],
+#             "confidence": 0.948,
+#             "span": {
+#               "offset": 3,
+#               "length": 1
+#             }
+#           },
+#           {
+#             "content": "absolutely",
+#             "polygon": [
+#               1.3147,
+#               1.0991,
+#               1.9191,
+#               1.0988,
+#               1.9201,
+#               1.2622,
+#               1.3155,
+#               1.2622
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 5,
+#               "length": 10
+#             }
+#           },
+#           {
+#             "content": "love",
+#             "polygon": [
+#               1.9513,
+#               1.0988,
+#               2.2092,
+#               1.0991,
+#               2.2103,
+#               1.2622,
+#               1.9524,
+#               1.2622
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 16,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "how",
+#             "polygon": [
+#               2.2414,
+#               1.0991,
+#               2.5235,
+#               1.0996,
+#               2.5244,
+#               1.2622,
+#               2.2425,
+#               1.2622
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 21,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "fast",
+#             "polygon": [
+#               2.5611,
+#               1.0996,
+#               2.7894,
+#               1.0995,
+#               2.7901,
+#               1.2622,
+#               2.562,
+#               1.2622
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 25,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "and",
+#             "polygon": [
+#               2.8297,
+#               1.0995,
+#               3.0366,
+#               1.0995,
+#               3.0372,
+#               1.2622,
+#               2.8304,
+#               1.2622
+#             ],
+#             "confidence": 0.996,
+#             "span": {
+#               "offset": 30,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "responsive",
+#             "polygon": [
+#               3.0688,
+#               1.0996,
+#               3.7645,
+#               1.101,
+#               3.7651,
+#               1.2622,
+#               3.0694,
+#               1.2622
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 34,
+#               "length": 10
+#             }
+#           },
+#           {
+#             "content": "this",
+#             "polygon": [
+#               3.8048,
+#               1.1012,
+#               4.0197,
+#               1.1014,
+#               4.0201,
+#               1.2622,
+#               3.8053,
+#               1.2622
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 45,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "application",
+#             "polygon": [
+#               4.0627,
+#               1.1014,
+#               4.702,
+#               1.0995,
+#               4.7027,
+#               1.2622,
+#               4.063,
+#               1.2622
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 50,
+#               "length": 11
+#             }
+#           },
+#           {
+#             "content": "is.",
+#             "polygon": [
+#               4.7342,
+#               1.0996,
+#               4.903,
+#               1.0998,
+#               4.903,
+#               1.2622,
+#               4.7349,
+#               1.2622
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 62,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "2.",
+#             "polygon": [
+#               1.0662,
+#               1.3708,
+#               1.1902,
+#               1.371,
+#               1.1909,
+#               1.5378,
+#               1.0671,
+#               1.538
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 66,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "The",
+#             "polygon": [
+#               1.237,
+#               1.3711,
+#               1.4712,
+#               1.3714,
+#               1.4717,
+#               1.5373,
+#               1.2377,
+#               1.5377
+#             ],
+#             "confidence": 0.999,
+#             "span": {
+#               "offset": 69,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "user",
+#             "polygon": [
+#               1.518,
+#               1.3715,
+#               1.7604,
+#               1.3714,
+#               1.761,
+#               1.5369,
+#               1.5185,
+#               1.5372
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 73,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "interface",
+#             "polygon": [
+#               1.7935,
+#               1.3713,
+#               2.3334,
+#               1.3718,
+#               2.334,
+#               1.5383,
+#               1.7941,
+#               1.5369
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 78,
+#               "length": 9
+#             }
+#           },
+#           {
+#             "content": "looks",
+#             "polygon": [
+#               2.3664,
+#               1.3718,
+#               2.7135,
+#               1.3718,
+#               2.7142,
+#               1.539,
+#               2.367,
+#               1.5384
+#             ],
+#             "confidence": 0.996,
+#             "span": {
+#               "offset": 88,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "outdated",
+#             "polygon": [
+#               2.7576,
+#               1.3717,
+#               3.2893,
+#               1.3718,
+#               3.2898,
+#               1.5401,
+#               2.7583,
+#               1.5392
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 94,
+#               "length": 8
+#             }
+#           },
+#           {
+#             "content": "and",
+#             "polygon": [
+#               3.3389,
+#               1.372,
+#               3.562,
+#               1.3726,
+#               3.5625,
+#               1.5408,
+#               3.3394,
+#               1.5403
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 103,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "feels",
+#             "polygon": [
+#               3.6033,
+#               1.3727,
+#               3.8953,
+#               1.3731,
+#               3.8956,
+#               1.5414,
+#               3.6038,
+#               1.5408
+#             ],
+#             "confidence": 0.997,
+#             "span": {
+#               "offset": 107,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "confusing",
+#             "polygon": [
+#               3.9394,
+#               1.3732,
+#               4.5261,
+#               1.3742,
+#               4.5261,
+#               1.544,
+#               3.9396,
+#               1.5416
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 113,
+#               "length": 9
+#             }
+#           },
+#           {
+#             "content": "to",
+#             "polygon": [
+#               4.5702,
+#               1.3742,
+#               4.6694,
+#               1.3743,
+#               4.6692,
+#               1.5439,
+#               4.5702,
+#               1.5439
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 123,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "navigate.",
+#             "polygon": [
+#               4.7024,
+#               1.3743,
+#               5.2904,
+#               1.3731,
+#               5.2904,
+#               1.5445,
+#               4.7023,
+#               1.5439
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 126,
+#               "length": 9
+#             }
+#           },
+#           {
+#             "content": "3.",
+#             "polygon": [
+#               1.0677,
+#               1.6502,
+#               1.1889,
+#               1.6506,
+#               1.1897,
+#               1.8193,
+#               1.0685,
+#               1.8198
+#             ],
+#             "confidence": 0.989,
+#             "span": {
+#               "offset": 136,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "Customer",
+#             "polygon": [
+#               1.2385,
+#               1.6508,
+#               1.842,
+#               1.6524,
+#               1.8427,
+#               1.8184,
+#               1.2394,
+#               1.8191
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 139,
+#               "length": 8
+#             }
+#           },
+#           {
+#             "content": "support",
+#             "polygon": [
+#               1.8778,
+#               1.6524,
+#               2.3242,
+#               1.6525,
+#               2.3254,
+#               1.8191,
+#               1.8786,
+#               1.8184
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 148,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "resolved",
+#             "polygon": [
+#               2.3573,
+#               1.6525,
+#               2.8946,
+#               1.6521,
+#               2.8956,
+#               1.8213,
+#               2.3585,
+#               1.8191
+#             ],
+#             "confidence": 0.993,
+#             "span": {
+#               "offset": 156,
+#               "length": 8
+#             }
+#           },
+#           {
+#             "content": "my",
+#             "polygon": [
+#               2.947,
+#               1.6522,
+#               3.1068,
+#               1.652,
+#               3.1076,
+#               1.8213,
+#               2.9479,
+#               1.8213
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 165,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "issue",
+#             "polygon": [
+#               3.1399,
+#               1.6519,
+#               3.4871,
+#               1.6512,
+#               3.4875,
+#               1.8204,
+#               3.1406,
+#               1.8213
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 168,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "within",
+#             "polygon": [
+#               3.5257,
+#               1.6513,
+#               3.8673,
+#               1.6522,
+#               3.868,
+#               1.8204,
+#               3.5261,
+#               1.8204
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 174,
+#               "length": 6
+#             }
+#           },
+#           {
+#             "content": "minutes",
+#             "polygon": [
+#               3.9004,
+#               1.6522,
+#               4.4047,
+#               1.6527,
+#               4.4048,
+#               1.8213,
+#               3.9011,
+#               1.8204
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 181,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "and",
+#             "polygon": [
+#               4.4488,
+#               1.6529,
+#               4.672,
+#               1.6537,
+#               4.672,
+#               1.8213,
+#               4.4488,
+#               1.8213
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 189,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "was",
+#             "polygon": [
+#               4.7161,
+#               1.6539,
+#               4.9613,
+#               1.6548,
+#               4.9612,
+#               1.8213,
+#               4.7161,
+#               1.8213
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 193,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "very",
+#             "polygon": [
+#               4.9999,
+#               1.6549,
+#               5.2644,
+#               1.6553,
+#               5.2645,
+#               1.8213,
+#               4.9998,
+#               1.8213
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 197,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "polite.",
+#             "polygon": [
+#               5.3085,
+#               1.6554,
+#               5.6777,
+#               1.652,
+#               5.6777,
+#               1.8212,
+#               5.3086,
+#               1.8213
+#             ],
+#             "confidence": 0.993,
+#             "span": {
+#               "offset": 202,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "4.",
+#             "polygon": [
+#               1.0685,
+#               1.9283,
+#               1.1905,
+#               1.9285,
+#               1.1914,
+#               2.0981,
+#               1.0694,
+#               2.0981
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 210,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "The",
+#             "polygon": [
+#               1.2349,
+#               1.9286,
+#               1.4567,
+#               1.929,
+#               1.4576,
+#               2.098,
+#               1.2358,
+#               2.0981
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 213,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "product",
+#             "polygon": [
+#               1.4899,
+#               1.9292,
+#               1.9557,
+#               1.93,
+#               1.9566,
+#               2.0964,
+#               1.4909,
+#               2.0979
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 217,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "works",
+#             "polygon": [
+#               1.9889,
+#               1.9298,
+#               2.3743,
+#               1.9291,
+#               2.3754,
+#               2.0963,
+#               1.9899,
+#               2.0963
+#             ],
+#             "confidence": 0.996,
+#             "span": {
+#               "offset": 225,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "as",
+#             "polygon": [
+#               2.4186,
+#               1.9292,
+#               2.56,
+#               1.9294,
+#               2.5614,
+#               2.0969,
+#               2.4198,
+#               2.0965
+#             ],
+#             "confidence": 0.99,
+#             "span": {
+#               "offset": 231,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "expected,",
+#             "polygon": [
+#               2.6016,
+#               1.9295,
+#               3.1949,
+#               1.9294,
+#               3.1959,
+#               2.0981,
+#               2.603,
+#               2.0971
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 234,
+#               "length": 9
+#             }
+#           },
+#           {
+#             "content": "but",
+#             "polygon": [
+#               3.2475,
+#               1.9294,
+#               3.4361,
+#               1.9292,
+#               3.437,
+#               2.0981,
+#               3.2486,
+#               2.0981
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 244,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "there",
+#             "polygon": [
+#               3.4721,
+#               1.9291,
+#               3.7743,
+#               1.9285,
+#               3.775,
+#               2.0981,
+#               3.473,
+#               2.0981
+#             ],
+#             "confidence": 0.997,
+#             "span": {
+#               "offset": 248,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "is",
+#             "polygon": [
+#               3.8075,
+#               1.9286,
+#               3.9073,
+#               1.9289,
+#               3.9081,
+#               2.0981,
+#               3.8082,
+#               2.0981
+#             ],
+#             "confidence": 0.997,
+#             "span": {
+#               "offset": 254,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "nothing",
+#             "polygon": [
+#               3.9406,
+#               1.929,
+#               4.4147,
+#               1.9285,
+#               4.4155,
+#               2.0981,
+#               3.9414,
+#               2.0981
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 257,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "particularly",
+#             "polygon": [
+#               4.4673,
+#               1.9284,
+#               5.116,
+#               1.9275,
+#               5.1162,
+#               2.0981,
+#               4.4681,
+#               2.0981
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 265,
+#               "length": 12
+#             }
+#           },
+#           {
+#             "content": "impressive",
+#             "polygon": [
+#               5.1493,
+#               1.9276,
+#               5.8341,
+#               1.9282,
+#               5.8346,
+#               2.0965,
+#               5.1494,
+#               2.0981
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 278,
+#               "length": 10
+#             }
+#           },
+#           {
+#             "content": "about",
+#             "polygon": [
+#               5.8756,
+#               1.9284,
+#               6.2028,
+#               1.9277,
+#               6.2037,
+#               2.0955,
+#               5.8762,
+#               2.0962
+#             ],
+#             "confidence": 0.996,
+#             "span": {
+#               "offset": 289,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "it.",
+#             "polygon": [
+#               6.236,
+#               1.9276,
+#               6.3691,
+#               1.9269,
+#               6.3695,
+#               2.0957,
+#               6.237,
+#               2.0955
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 295,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "5.",
+#             "polygon": [
+#               1.0711,
+#               2.2033,
+#               1.182,
+#               2.2036,
+#               1.1825,
+#               2.3731,
+#               1.0717,
+#               2.3733
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 299,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "I",
+#             "polygon": [
+#               1.2152,
+#               2.2037,
+#               1.2679,
+#               2.2038,
+#               1.2683,
+#               2.373,
+#               1.2157,
+#               2.3731
+#             ],
+#             "confidence": 0.854,
+#             "span": {
+#               "offset": 302,
+#               "length": 1
+#             }
+#           },
+#           {
+#             "content": "am",
+#             "polygon": [
+#               1.315,
+#               2.204,
+#               1.5006,
+#               2.2043,
+#               1.5011,
+#               2.3723,
+#               1.3154,
+#               2.3729
+#             ],
+#             "confidence": 0.997,
+#             "span": {
+#               "offset": 304,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "extremely",
+#             "polygon": [
+#               1.545,
+#               2.2044,
+#               2.1463,
+#               2.2034,
+#               2.147,
+#               2.3729,
+#               1.5455,
+#               2.3721
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 307,
+#               "length": 9
+#             }
+#           },
+#           {
+#             "content": "disappointed",
+#             "polygon": [
+#               2.1851,
+#               2.2034,
+#               2.9665,
+#               2.2029,
+#               2.9674,
+#               2.3746,
+#               2.1858,
+#               2.373
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 317,
+#               "length": 12
+#             }
+#           },
+#           {
+#             "content": "with",
+#             "polygon": [
+#               3.0081,
+#               2.2028,
+#               3.2519,
+#               2.202,
+#               3.2523,
+#               2.3732,
+#               3.0089,
+#               2.3744
+#             ],
+#             "confidence": 0.988,
+#             "span": {
+#               "offset": 330,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "the",
+#             "polygon": [
+#               3.2962,
+#               2.202,
+#               3.4874,
+#               2.2024,
+#               3.4877,
+#               2.3733,
+#               3.2966,
+#               2.3732
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 335,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "frequent",
+#             "polygon": [
+#               3.5262,
+#               2.2025,
+#               4.0389,
+#               2.2031,
+#               4.0388,
+#               2.3728,
+#               3.5264,
+#               2.3734
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 339,
+#               "length": 8
+#             }
+#           },
+#           {
+#             "content": "crashes",
+#             "polygon": [
+#               4.0804,
+#               2.2031,
+#               4.5598,
+#               2.2042,
+#               4.5597,
+#               2.3728,
+#               4.0804,
+#               2.373
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 348,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "and",
+#             "polygon": [
+#               4.6014,
+#               2.2042,
+#               4.8258,
+#               2.2042,
+#               4.8258,
+#               2.3727,
+#               4.6013,
+#               2.3728
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 356,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "data",
+#             "polygon": [
+#               4.8729,
+#               2.2042,
+#               5.1362,
+#               2.2041,
+#               5.1362,
+#               2.3707,
+#               4.8729,
+#               2.3725
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 360,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "loss.",
+#             "polygon": [
+#               5.1861,
+#               2.2041,
+#               5.473,
+#               2.2042,
+#               5.473,
+#               2.3701,
+#               5.1861,
+#               2.3705
+#             ],
+#             "confidence": 0.993,
+#             "span": {
+#               "offset": 365,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "6.",
+#             "polygon": [
+#               1.0687,
+#               2.4847,
+#               1.1891,
+#               2.4849,
+#               1.1898,
+#               2.6569,
+#               1.0695,
+#               2.6568
+#             ],
+#             "confidence": 0.993,
+#             "span": {
+#               "offset": 371,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "The",
+#             "polygon": [
+#               1.2367,
+#               2.485,
+#               1.4718,
+#               2.4848,
+#               1.4722,
+#               2.6571,
+#               1.2373,
+#               2.6569
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 374,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "onboarding",
+#             "polygon": [
+#               1.5138,
+#               2.4847,
+#               2.2026,
+#               2.486,
+#               2.2031,
+#               2.6568,
+#               1.5141,
+#               2.6571
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 378,
+#               "length": 10
+#             }
+#           },
+#           {
+#             "content": "experience",
+#             "polygon": [
+#               2.2502,
+#               2.486,
+#               2.9053,
+#               2.4854,
+#               2.9056,
+#               2.6571,
+#               2.2507,
+#               2.657
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 389,
+#               "length": 10
+#             }
+#           },
+#           {
+#             "content": "was",
+#             "polygon": [
+#               2.9389,
+#               2.4853,
+#               3.2077,
+#               2.4858,
+#               3.2079,
+#               2.6573,
+#               2.9392,
+#               2.657
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 400,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "smooth",
+#             "polygon": [
+#               3.2525,
+#               2.4859,
+#               3.7005,
+#               2.4861,
+#               3.7006,
+#               2.6559,
+#               3.2527,
+#               2.6573
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 404,
+#               "length": 6
+#             }
+#           },
+#           {
+#             "content": "and",
+#             "polygon": [
+#               3.7481,
+#               2.4862,
+#               3.9693,
+#               2.4866,
+#               3.9692,
+#               2.6564,
+#               3.7481,
+#               2.656
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 411,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "easy",
+#             "polygon": [
+#               4.0169,
+#               2.4867,
+#               4.3108,
+#               2.4869,
+#               4.3107,
+#               2.6566,
+#               4.0168,
+#               2.6565
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 415,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "to",
+#             "polygon": [
+#               4.3472,
+#               2.4869,
+#               4.4592,
+#               2.4867,
+#               4.4591,
+#               2.6565,
+#               4.3471,
+#               2.6566
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 420,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "follow.",
+#             "polygon": [
+#               4.5012,
+#               2.4867,
+#               4.8975,
+#               2.4867,
+#               4.8975,
+#               2.6569,
+#               4.5011,
+#               2.6565
+#             ],
+#             "confidence": 0.993,
+#             "span": {
+#               "offset": 423,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "7.",
+#             "polygon": [
+#               1.0703,
+#               2.7597,
+#               1.1877,
+#               2.7602,
+#               1.1883,
+#               2.9341,
+#               1.071,
+#               2.9341
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 431,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "Pricing",
+#             "polygon": [
+#               1.2408,
+#               2.7604,
+#               1.6545,
+#               2.7624,
+#               1.6553,
+#               2.9338,
+#               1.2414,
+#               2.9341
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 434,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "seems",
+#             "polygon": [
+#               1.702,
+#               2.7625,
+#               2.0878,
+#               2.7633,
+#               2.0884,
+#               2.9329,
+#               1.7028,
+#               2.9336
+#             ],
+#             "confidence": 0.996,
+#             "span": {
+#               "offset": 442,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "reasonable",
+#             "polygon": [
+#               2.1213,
+#               2.7634,
+#               2.8314,
+#               2.7624,
+#               2.832,
+#               2.9336,
+#               2.1219,
+#               2.9329
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 448,
+#               "length": 10
+#             }
+#           },
+#           {
+#             "content": "compared",
+#             "polygon": [
+#               2.8733,
+#               2.7623,
+#               3.4827,
+#               2.7612,
+#               3.4833,
+#               2.9325,
+#               2.8739,
+#               2.9335
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 459,
+#               "length": 8
+#             }
+#           },
+#           {
+#             "content": "to",
+#             "polygon": [
+#               3.5274,
+#               2.7613,
+#               3.642,
+#               2.7616,
+#               3.6426,
+#               2.9319,
+#               3.528,
+#               2.9323
+#             ],
+#             "confidence": 0.999,
+#             "span": {
+#               "offset": 468,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "other",
+#             "polygon": [
+#               3.684,
+#               2.7617,
+#               3.9887,
+#               2.7607,
+#               3.9888,
+#               2.9318,
+#               3.6845,
+#               2.9318
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 471,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "tools",
+#             "polygon": [
+#               4.0222,
+#               2.7606,
+#               4.3129,
+#               2.7613,
+#               4.3131,
+#               2.9316,
+#               4.0223,
+#               2.9318
+#             ],
+#             "confidence": 0.997,
+#             "span": {
+#               "offset": 477,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "in",
+#             "polygon": [
+#               4.3465,
+#               2.7614,
+#               4.4723,
+#               2.7617,
+#               4.4724,
+#               2.9313,
+#               4.3466,
+#               2.9315
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 483,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "the",
+#             "polygon": [
+#               4.5142,
+#               2.7618,
+#               4.6931,
+#               2.7618,
+#               4.6932,
+#               2.9306,
+#               4.5143,
+#               2.9313
+#             ],
+#             "confidence": 0.999,
+#             "span": {
+#               "offset": 486,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "market.",
+#             "polygon": [
+#               4.7267,
+#               2.7616,
+#               5.2129,
+#               2.7601,
+#               5.2129,
+#               2.9285,
+#               4.7267,
+#               2.9304
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 490,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "8.",
+#             "polygon": [
+#               1.0691,
+#               3.0364,
+#               1.1898,
+#               3.0366,
+#               1.1901,
+#               3.2079,
+#               1.0694,
+#               3.2078
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 498,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "The",
+#             "polygon": [
+#               1.2347,
+#               3.0367,
+#               1.4507,
+#               3.0372,
+#               1.4512,
+#               3.208,
+#               1.2351,
+#               3.2079
+#             ],
+#             "confidence": 0.996,
+#             "span": {
+#               "offset": 501,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "latest",
+#             "polygon": [
+#               1.4844,
+#               3.0373,
+#               1.8464,
+#               3.0384,
+#               1.8469,
+#               3.2082,
+#               1.4849,
+#               3.208
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 505,
+#               "length": 6
+#             }
+#           },
+#           {
+#             "content": "update",
+#             "polygon": [
+#               1.8885,
+#               3.0385,
+#               2.2813,
+#               3.0382,
+#               2.2817,
+#               3.2092,
+#               1.889,
+#               3.2081
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 512,
+#               "length": 6
+#             }
+#           },
+#           {
+#             "content": "introduced",
+#             "polygon": [
+#               2.315,
+#               3.0381,
+#               2.9885,
+#               3.0384,
+#               2.9885,
+#               3.2106,
+#               2.3153,
+#               3.2093
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 519,
+#               "length": 10
+#             }
+#           },
+#           {
+#             "content": "several",
+#             "polygon": [
+#               3.0362,
+#               3.0383,
+#               3.4768,
+#               3.0385,
+#               3.4766,
+#               3.2106,
+#               3.0362,
+#               3.2105
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 530,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "bugs",
+#             "polygon": [
+#               3.5273,
+#               3.0386,
+#               3.8191,
+#               3.0393,
+#               3.8191,
+#               3.2103,
+#               3.5272,
+#               3.2106
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 538,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "that",
+#             "polygon": [
+#               3.8612,
+#               3.0392,
+#               4.0773,
+#               3.0387,
+#               4.0771,
+#               3.2109,
+#               3.8612,
+#               3.2106
+#             ],
+#             "confidence": 0.984,
+#             "span": {
+#               "offset": 543,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "made",
+#             "polygon": [
+#               4.1109,
+#               3.0386,
+#               4.4757,
+#               3.0416,
+#               4.4755,
+#               3.2109,
+#               4.1107,
+#               3.2109
+#             ],
+#             "confidence": 0.989,
+#             "span": {
+#               "offset": 548,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "things",
+#             "polygon": [
+#               4.515,
+#               3.0418,
+#               4.8854,
+#               3.0421,
+#               4.8852,
+#               3.2109,
+#               4.5148,
+#               3.2109
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 553,
+#               "length": 6
+#             }
+#           },
+#           {
+#             "content": "worse.",
+#             "polygon": [
+#               4.9247,
+#               3.042,
+#               5.3402,
+#               3.0419,
+#               5.3402,
+#               3.2109,
+#               4.9244,
+#               3.2109
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 560,
+#               "length": 6
+#             }
+#           },
+#           {
+#             "content": "9.",
+#             "polygon": [
+#               1.0693,
+#               3.3151,
+#               1.1879,
+#               3.3157,
+#               1.1888,
+#               3.4839,
+#               1.0701,
+#               3.484
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 567,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "Overall,",
+#             "polygon": [
+#               1.2376,
+#               3.3159,
+#               1.7038,
+#               3.3174,
+#               1.7046,
+#               3.4829,
+#               1.2384,
+#               3.4839
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 570,
+#               "length": 8
+#             }
+#           },
+#           {
+#             "content": "the",
+#             "polygon": [
+#               1.7507,
+#               3.3174,
+#               1.9438,
+#               3.3171,
+#               1.9445,
+#               3.4829,
+#               1.7515,
+#               3.4829
+#             ],
+#             "confidence": 0.997,
+#             "span": {
+#               "offset": 579,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "service",
+#             "polygon": [
+#               1.9852,
+#               3.317,
+#               2.4045,
+#               3.3174,
+#               2.4053,
+#               3.4854,
+#               1.9858,
+#               3.4829
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 583,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "meets",
+#             "polygon": [
+#               2.4376,
+#               3.3174,
+#               2.8238,
+#               3.3177,
+#               2.8243,
+#               3.4868,
+#               2.4383,
+#               3.4855
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 591,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "basic",
+#             "polygon": [
+#               2.8569,
+#               3.3177,
+#               3.188,
+#               3.3176,
+#               3.1883,
+#               3.4874,
+#               2.8574,
+#               3.4869
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 597,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "requirements",
+#             "polygon": [
+#               3.2211,
+#               3.3175,
+#               4.0487,
+#               3.3182,
+#               4.0491,
+#               3.4876,
+#               3.2213,
+#               3.4874
+#             ],
+#             "confidence": 0.989,
+#             "span": {
+#               "offset": 603,
+#               "length": 12
+#             }
+#           },
+#           {
+#             "content": "without",
+#             "polygon": [
+#               4.09,
+#               3.3181,
+#               4.5314,
+#               3.3184,
+#               4.5313,
+#               3.4877,
+#               4.0904,
+#               3.4877
+#             ],
+#             "confidence": 0.993,
+#             "span": {
+#               "offset": 616,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "any",
+#             "polygon": [
+#               4.5728,
+#               3.3186,
+#               4.777,
+#               3.3193,
+#               4.7768,
+#               3.4877,
+#               4.5727,
+#               3.4877
+#             ],
+#             "confidence": 0.997,
+#             "span": {
+#               "offset": 624,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "major",
+#             "polygon": [
+#               4.8101,
+#               3.3194,
+#               5.1632,
+#               3.32,
+#               5.1631,
+#               3.4877,
+#               4.81,
+#               3.4877
+#             ],
+#             "confidence": 0.996,
+#             "span": {
+#               "offset": 628,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "issues.",
+#             "polygon": [
+#               5.1963,
+#               3.32,
+#               5.6501,
+#               3.3209,
+#               5.6501,
+#               3.4873,
+#               5.1962,
+#               3.4876
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 634,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "10.",
+#             "polygon": [
+#               1.0824,
+#               3.5922,
+#               1.2516,
+#               3.5921,
+#               1.2523,
+#               3.7636,
+#               1.0832,
+#               3.7626
+#             ],
+#             "confidence": 0.98,
+#             "span": {
+#               "offset": 642,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "I",
+#             "polygon": [
+#               1.2854,
+#               3.5921,
+#               1.3418,
+#               3.592,
+#               1.3424,
+#               3.7642,
+#               1.2861,
+#               3.7638
+#             ],
+#             "confidence": 0.902,
+#             "span": {
+#               "offset": 646,
+#               "length": 1
+#             }
+#           },
+#           {
+#             "content": "would",
+#             "polygon": [
+#               1.3869,
+#               3.592,
+#               1.7449,
+#               3.5925,
+#               1.7455,
+#               3.7649,
+#               1.3875,
+#               3.7644
+#             ],
+#             "confidence": 0.996,
+#             "span": {
+#               "offset": 648,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "highly",
+#             "polygon": [
+#               1.7956,
+#               3.5926,
+#               2.1311,
+#               3.5922,
+#               2.1319,
+#               3.7645,
+#               1.7962,
+#               3.7649
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 654,
+#               "length": 6
+#             }
+#           },
+#           {
+#             "content": "recommend",
+#             "polygon": [
+#               2.1649,
+#               3.5921,
+#               2.9203,
+#               3.5941,
+#               2.9214,
+#               3.7647,
+#               2.1657,
+#               3.7644
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 661,
+#               "length": 9
+#             }
+#           },
+#           {
+#             "content": "this",
+#             "polygon": [
+#               2.9626,
+#               3.5943,
+#               3.1769,
+#               3.5947,
+#               3.1779,
+#               3.7652,
+#               2.9637,
+#               3.7648
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 671,
+#               "length": 4
+#             }
+#           },
+#           {
+#             "content": "solution",
+#             "polygon": [
+#               3.222,
+#               3.5947,
+#               3.6758,
+#               3.5937,
+#               3.6766,
+#               3.765,
+#               3.223,
+#               3.7653
+#             ],
+#             "confidence": 0.994,
+#             "span": {
+#               "offset": 676,
+#               "length": 8
+#             }
+#           },
+#           {
+#             "content": "to",
+#             "polygon": [
+#               3.7096,
+#               3.5936,
+#               3.8337,
+#               3.5931,
+#               3.8345,
+#               3.7645,
+#               3.7104,
+#               3.7649
+#             ],
+#             "confidence": 0.998,
+#             "span": {
+#               "offset": 685,
+#               "length": 2
+#             }
+#           },
+#           {
+#             "content": "teams",
+#             "polygon": [
+#               3.8675,
+#               3.593,
+#               4.2508,
+#               3.593,
+#               4.2518,
+#               3.7665,
+#               3.8683,
+#               3.7644
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 688,
+#               "length": 5
+#             }
+#           },
+#           {
+#             "content": "looking",
+#             "polygon": [
+#               4.2847,
+#               3.593,
+#               4.7244,
+#               3.5931,
+#               4.7249,
+#               3.766,
+#               4.2857,
+#               3.7665
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 694,
+#               "length": 7
+#             }
+#           },
+#           {
+#             "content": "for",
+#             "polygon": [
+#               4.7582,
+#               3.593,
+#               4.9274,
+#               3.5929,
+#               4.9277,
+#               3.7669,
+#               4.7587,
+#               3.7661
+#             ],
+#             "confidence": 0.995,
+#             "span": {
+#               "offset": 702,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "reliability",
+#             "polygon": [
+#               4.9612,
+#               3.5928,
+#               5.5278,
+#               3.5941,
+#               5.5279,
+#               3.7672,
+#               4.9615,
+#               3.7671
+#             ],
+#             "confidence": 0.993,
+#             "span": {
+#               "offset": 706,
+#               "length": 11
+#             }
+#           },
+#           {
+#             "content": "and",
+#             "polygon": [
+#               5.5673,
+#               3.5939,
+#               5.7928,
+#               3.5932,
+#               5.7935,
+#               3.7674,
+#               5.5675,
+#               3.7672
+#             ],
+#             "confidence": 0.999,
+#             "span": {
+#               "offset": 718,
+#               "length": 3
+#             }
+#           },
+#           {
+#             "content": "performance.",
+#             "polygon": [
+#               5.8407,
+#               3.593,
+#               6.6517,
+#               3.5946,
+#               6.6517,
+#               3.7641,
+#               5.8415,
+#               3.7674
+#             ],
+#             "confidence": 0.992,
+#             "span": {
+#               "offset": 722,
+#               "length": 12
+#             }
+#           }
+#         ],
+#         "lines": [
+#           {
+#             "content": "1. I absolutely love how fast and responsive this application is.",
+#             "polygon": [
+#               1.081,
+#               1.0986,
+#               4.9029,
+#               1.0995,
+#               4.9028,
+#               1.2622,
+#               1.0809,
+#               1.2615
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 0,
+#                 "length": 65
+#               }
+#             ]
+#           },
+#           {
+#             "content": "2. The user interface looks outdated and feels confusing to navigate.",
+#             "polygon": [
+#               1.0662,
+#               1.3698,
+#               5.2896,
+#               1.3731,
+#               5.2895,
+#               1.5428,
+#               1.0661,
+#               1.5396
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 66,
+#                 "length": 69
+#               }
+#             ]
+#           },
+#           {
+#             "content": "3. Customer support resolved my issue within minutes and was very polite.",
+#             "polygon": [
+#               1.0677,
+#               1.6497,
+#               5.6746,
+#               1.6521,
+#               5.6745,
+#               1.8212,
+#               1.0676,
+#               1.8184
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 136,
+#                 "length": 73
+#               }
+#             ]
+#           },
+#           {
+#             "content": "4. The product works as expected, but there is nothing particularly impressive about it.",
+#             "polygon": [
+#               1.0685,
+#               1.9272,
+#               6.3664,
+#               1.9265,
+#               6.3665,
+#               2.0968,
+#               1.0686,
+#               2.0976
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 210,
+#                 "length": 88
+#               }
+#             ]
+#           },
+#           {
+#             "content": "5. I am extremely disappointed with the frequent crashes and data loss.",
+#             "polygon": [
+#               1.0711,
+#               2.2033,
+#               5.4694,
+#               2.2006,
+#               5.4695,
+#               2.3702,
+#               1.0712,
+#               2.3729
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 299,
+#                 "length": 71
+#               }
+#             ]
+#           },
+#           {
+#             "content": "6. The onboarding experience was smooth and easy to follow.",
+#             "polygon": [
+#               1.0687,
+#               2.4842,
+#               4.8947,
+#               2.4857,
+#               4.8946,
+#               2.6555,
+#               1.0686,
+#               2.654
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 371,
+#                 "length": 59
+#               }
+#             ]
+#           },
+#           {
+#             "content": "7. Pricing seems reasonable compared to other tools in the market.",
+#             "polygon": [
+#               1.0703,
+#               2.7597,
+#               5.2118,
+#               2.7569,
+#               5.212,
+#               2.929,
+#               1.0704,
+#               2.9322
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 431,
+#                 "length": 66
+#               }
+#             ]
+#           },
+#           {
+#             "content": "8. The latest update introduced several bugs that made things worse.",
+#             "polygon": [
+#               1.0691,
+#               3.0338,
+#               5.3356,
+#               3.0405,
+#               5.3353,
+#               3.2109,
+#               1.0688,
+#               3.2052
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 498,
+#                 "length": 68
+#               }
+#             ]
+#           },
+#           {
+#             "content": "9. Overall, the service meets basic requirements without any major issues.",
+#             "polygon": [
+#               1.0693,
+#               3.3146,
+#               5.6492,
+#               3.3189,
+#               5.6491,
+#               3.4869,
+#               1.0691,
+#               3.4827
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 567,
+#                 "length": 74
+#               }
+#             ]
+#           },
+#           {
+#             "content": "10. I would highly recommend this solution to teams looking for reliability and performance.",
+#             "polygon": [
+#               1.0824,
+#               3.5915,
+#               6.6498,
+#               3.5932,
+#               6.6498,
+#               3.7651,
+#               1.0824,
+#               3.7635
+#             ],
+#             "spans": [
+#               {
+#                 "offset": 642,
+#                 "length": 92
+#               }
+#             ]
+#           }
+#         ],
+#         "spans": [
+#           {
+#             "offset": 0,
+#             "length": 734
+#           }
+#         ]
+#       }
+#     ],
+#     "tables": [],
+#     "paragraphs": [
+#       {
+#         "spans": [
+#           {
+#             "offset": 0,
+#             "length": 65
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.081,
+#               1.0986,
+#               4.9029,
+#               1.0995,
+#               4.9028,
+#               1.2623,
+#               1.0809,
+#               1.2615
+#             ]
+#           }
+#         ],
+#         "content": "1. I absolutely love how fast and responsive this application is."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 66,
+#             "length": 69
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0662,
+#               1.3698,
+#               5.2896,
+#               1.3731,
+#               5.2895,
+#               1.5428,
+#               1.0661,
+#               1.5396
+#             ]
+#           }
+#         ],
+#         "content": "2. The user interface looks outdated and feels confusing to navigate."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 136,
+#             "length": 73
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0677,
+#               1.6493,
+#               5.6746,
+#               1.6521,
+#               5.6745,
+#               1.8212,
+#               1.0676,
+#               1.8184
+#             ]
+#           }
+#         ],
+#         "content": "3. Customer support resolved my issue within minutes and was very polite."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 210,
+#             "length": 88
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0685,
+#               1.9272,
+#               6.3664,
+#               1.9263,
+#               6.3665,
+#               2.0968,
+#               1.0686,
+#               2.0976
+#             ]
+#           }
+#         ],
+#         "content": "4. The product works as expected, but there is nothing particularly impressive about it."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 299,
+#             "length": 71
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0711,
+#               2.2033,
+#               5.4694,
+#               2.2006,
+#               5.4695,
+#               2.3702,
+#               1.0712,
+#               2.3729
+#             ]
+#           }
+#         ],
+#         "content": "5. I am extremely disappointed with the frequent crashes and data loss."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 371,
+#             "length": 59
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0687,
+#               2.4842,
+#               4.8947,
+#               2.4857,
+#               4.8946,
+#               2.6555,
+#               1.0686,
+#               2.654
+#             ]
+#           }
+#         ],
+#         "content": "6. The onboarding experience was smooth and easy to follow."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 431,
+#             "length": 66
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0703,
+#               2.7597,
+#               5.2118,
+#               2.7565,
+#               5.212,
+#               2.929,
+#               1.0704,
+#               2.9322
+#             ]
+#           }
+#         ],
+#         "content": "7. Pricing seems reasonable compared to other tools in the market."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 498,
+#             "length": 68
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0691,
+#               3.0338,
+#               5.3356,
+#               3.0405,
+#               5.3353,
+#               3.2118,
+#               1.0688,
+#               3.2052
+#             ]
+#           }
+#         ],
+#         "content": "8. The latest update introduced several bugs that made things worse."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 567,
+#             "length": 74
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0693,
+#               3.3146,
+#               5.6492,
+#               3.3189,
+#               5.6491,
+#               3.4869,
+#               1.0691,
+#               3.4827
+#             ]
+#           }
+#         ],
+#         "content": "9. Overall, the service meets basic requirements without any major issues."
+#       },
+#       {
+#         "spans": [
+#           {
+#             "offset": 642,
+#             "length": 92
+#           }
+#         ],
+#         "boundingRegions": [
+#           {
+#             "pageNumber": 1,
+#             "polygon": [
+#               1.0824,
+#               3.5915,
+#               6.6498,
+#               3.5932,
+#               6.6498,
+#               3.7651,
+#               1.0824,
+#               3.7635
+#             ]
+#           }
+#         ],
+#         "content": "10. I would highly recommend this solution to teams looking for reliability and performance."
+#       }
+#     ],
+#     "styles": [],
+#     "contentFormat": "text",
+#     "sections": [
+#       {
+#         "spans": [
+#           {
+#             "offset": 0,
+#             "length": 734
+#           }
+#         ],
+#         "elements": [
+#           "/paragraphs/0",
+#           "/paragraphs/1",
+#           "/paragraphs/2",
+#           "/paragraphs/3",
+#           "/paragraphs/4",
+#           "/paragraphs/5",
+#           "/paragraphs/6",
+#           "/paragraphs/7",
+#           "/paragraphs/8",
+#           "/paragraphs/9"
+#         ]
+#       }
+#     ]
+#   }
+# }
