@@ -1,0 +1,78 @@
+# what are ARM templates
+  # Different ways deploying resources on Azure
+  # By Defining your Infrastructure as Code by declare a JSON based file - which has infrastructure and configuration as your azure resources
+  # Sample code - template for creating a document intelligence service - we make use of MS documentation 
+   # https://learn.microsoft.com/en-us/azure/templates/microsoft.cognitiveservices/accounts?pivots=deployment-language-arm-template
+
+
+# Method 1 -- From azure portal - ************************************************************************************************************
+
+
+  # First go to Axure portal, search for "Template deployment (deploy using custom templates)"
+  # for this example, create using "Build your own template in the editor" instead of common templates
+
+# {
+#     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+#     "contentVersion": "1.0.0.0",
+#     "parameters": {},
+#     "resources": [
+#         {
+#         "type": "Microsoft.CognitiveServices/accounts",
+#         "apiVersion": "2025-10-01-preview",
+#         "name": "documentIntelARM", # resource name
+#         "location":"East US", 
+#         "kind":"FormRecognizer",
+#         "sku":{ # pricing model
+#             "name":"S0"
+#         },
+#         "properties":{} # mandatory
+#         }
+        
+#     ]
+# }
+
+# Now Review and create this template
+# Once done, this should have created a new documentIntelARM resource
+
+# Method 2 -- From API Call ****************************************************************************************************************
+
+# For this example - we will be making use of Azure AI service on portal to make use of multiple AI resource with one resource
+# Before that, First you can navigate to Microsoft Entra ID on Azure portal , under Manage - Click on App registrations - create a new registration, so that
+# our VS Code can call the portal, this will create service principal
+# now go into your resource group on portal -> Access Control(IAM), click onn Add role assignment to give access to above registration
+# click on "Priviledged Administrator roles" and select contributor and click on Select members and search and select your app your registered above
+# review and assgin
+# now we can use VSCode to make API call
+ #first we need to get the token
+ # for below endpoint guid you see is your App tenent id fo the app your registered
+ # client_id is your registered app cliend id which you can get under Microsoft entra id->manage->App registration->click on your app name
+ # client_secret - for this go to your manage-> certificates & secret and create a new secret and copy the value to be used below
+ # note at the end of client_id,scope,client_secret values append &
+POST https://login.microsoftonline.com/534dd5d4-728c-4d0e-97bc-4a7fcdae53f0/oauth2/v2.0/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=<client-id-goes-here>&
+scope=https://management.azure.com/.default&
+client_secret=<client-secret-goes-here>&
+grant_type=client_credentials
+
+# upon clicking on Send Request we get the bearer token
+
+###
+# now we create request to create the resource
+PUT https://management.azure.com/subscriptions/<subscription_id>/resourceGroups/AI-GRP/providers/Microsoft.CongnitiveServices/accounts/<ai-service-rosource-name>?api-version=2023-10-01
+Authorization: Bearer <bearer-token-goes-here>
+Content-Type: application/json
+
+{
+  "location":"East US", 
+  "sku":{
+      "name":"S0"
+  },
+  "kind": "CognitiveServices",
+  "properties":{
+    
+  }
+}
+
+
