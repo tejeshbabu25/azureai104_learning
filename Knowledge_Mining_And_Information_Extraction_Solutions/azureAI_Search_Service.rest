@@ -1,0 +1,195 @@
+# Azure AI Search using keys - If you're building a query for full text search, this article provides steps for setting up the request. 
+# It also introduces a query structure, and explains how field attributes and linguistic analyzers can affect query outcomes.
+
+# Documentation : https://learn.microsoft.com/en-us/azure/search/search-query-create?tabs=portal-text-query
+
+# making an API call to Azure AI Search service against an index
+# We need 
+    # search endpoint URL from the Azure AI Search service resource on portal in the Overview section - https://aisearchservice-tej.search.windows.net
+    # Indexes name - azureblob-index3
+    # Manage query key from the Keys section of the Azure AI Search service resource on portal
+
+
+POST https://aisearchservice-tej.search.windows.net/indexes/azureblob-index01/docs/search?api-version=2025-09-01
+Content-Type: application/json
+api-key: api-key-goes-here
+
+{
+  "search": "Greenfield Technologies",
+  "searchMode": "all",
+  "queryType": "simple",
+  "top": 5
+}
+
+# Expected output
+# HTTP/1.1 200 OK
+# Transfer-Encoding: chunked
+# Content-Type: application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8
+# Content-Encoding: gzip
+# Vary: Accept-Encoding
+# Strict-Transport-Security: max-age=2592000, max-age=15724800; includeSubDomains
+# Preference-Applied: odata.include-annotations="*"
+# OData-Version: 4.0
+# request-id: 1057cc0b-9309-4104-97f6-ecd8128986d1
+# elapsed-time: 54
+# Date: Tue, 03 Feb 2026 02:29:14 GMT
+# Connection: close
+
+# {
+#   "@odata.context": "https://aisearchservice-tej.search.windows.net/indexes('azureblob-index01')/$metadata#docs(*)",
+#   "value": [
+#     {
+#       "@search.score": 11.981493,
+#       "content": "\nINVOICE\n\nInvoice Number: INV\ufffd2025\ufffd001\n\nInvoice Date: 2025\ufffd07\ufffd17\n\nDue Date: 2025\ufffd07\ufffd31\n\nCompany Name: Greenfield Technologies\n\nContact Name: John Smith\n\nAddress: 123 Technology Ave, Suite 400\n\nCity: New York\n\nState: NY\n\nZIP\ufffd 10001\n\nEmail: john.smith@greenfieldtech.com\n\n# Description Quantity Unit Price Total\n\n1 Cloud Storage \ufffd100GB\ufffd 2 $50.00 $100.00\n\n2 Data Analysis Service 10 $20.00 $200.00\n\n3 Custom Reporting 1 $150.00 $150.00\n\n---------------- -----------\n\nSubtotal $450.00\n\nTax \ufffd10%\ufffd $45.00\n\nTotal Due $495.00\n\nSample Invoice\n\nBill To\n\nItems\n\nNotes\n\nPayment is due within 14 days.\n\nPlease reference the invoice number when making payment.\n\nFor questions, contact accounting@yourservice.com or call \ufffd555\ufffd 123\ufffd4567.\n\nmailto:john.smith@greenfieldtech.com\nmailto:accounting@yourservice.com\n\n\nThank you for your business!\n\n\n",
+#       "metadata_storage_path": "aHR0cHM6Ly9zdHJhZ2V0ZWouYmxvYi5jb3JlLndpbmRvd3MubmV0L215ZG9jcy9TYW1wbGVfSW52b2ljZS5wZGY",
+#       "people": [
+#         "John Smith",
+#         "Bill"
+#       ],
+#       "organizations": [
+#         "Greenfield Technologies"
+#       ],
+#       "locations": [
+#         "New York",
+#         "NY"
+#       ],
+#       "keyphrases": [
+#         "Quantity Unit Price Total",
+#         "New York State",
+#         "1 Cloud Storage \ufffd100GB",
+#         "2 Data Analysis Service",
+#         "John Smith Address",
+#         "john.smith",
+#         "Due Date",
+#         "Company Name",
+#         "Greenfield Technologies",
+#         "Contact Name",
+#         "123 Technology Ave",
+#         "Suite 400 City",
+#         "3 Custom Reporting",
+#         "Items Notes",
+#         "Invoice Number",
+#         "Invoice Date",
+#         "Sample Invoice",
+#         "ZIP",
+#         "Email",
+#         "greenfieldtech",
+#         "Description",
+#         "Subtotal",
+#         "Tax",
+#         "Bill",
+#         "Payment",
+#         "14 days",
+#         "questions",
+#         "business",
+#         "\ufffd555"
+#       ],
+#       "language": "en",
+#       "translated_text": "\nINVOICE\n\nInvoice Number: INV\ufffd2025\ufffd001\n\nInvoice Date: 2025\ufffd07\ufffd17\n\nDue Date: 2025\ufffd07\ufffd31\n\nCompany Name: Greenfield Technologies\n\nContact Name: John Smith\n\nAddress: 123 Technology Ave, Suite 400\n\nCity: New York\n\nState: NY\n\nZIP\ufffd 10001\n\nEmail: john.smith@greenfieldtech.com\n\n# Description Quantity Unit Price Total\n\n1 Cloud Storage \ufffd100GB\ufffd 2 $50.00 $100.00\n\n2 Data Analysis Service 10 $20.00 $200.00\n\n3 Custom Reporting 1 $150.00 $150.00\n\n---------------- -----------\n\nSubtotal $450.00\n\nTax \ufffd10%\ufffd $45.00\n\nTotal Due $495.00\n\nSample Invoice\n\nBill To\n\nItems\n\nNotes\n\nPayment is due within 14 days.\n\nPlease reference the invoice number when making payment.\n\nFor questions, contact accounting@yourservice.com or call \ufffd555\ufffd 123\ufffd4567.\n\nmailto:john.smith@greenfieldtech.com\nmailto:accounting@yourservice.com\n\nThank you for your business!\n\n",
+#       "masked_text": "\nINVOICE\n\nInvoice Number: INV\ufffd2025\ufffd001\n\nInvoice Date: **********\n\nDue Date: **********\n\nCompany Name: ***********************\n\nContact Name: **********\n\nAddress: *****************************\n\nCity: New York\n\nState: NY\n\n**********\n\nEmail: *****************************\n\n# Description Quantity Unit Price Total\n\n1 Cloud Storage \ufffd100GB\ufffd 2 $50.00 $100.00\n\n2 Data Analysis Service 10 $20.00 $200.00\n\n3 Custom Reporting 1 $150.00 $150.00\n\n---------------- -----------\n\nSubtotal $450.00\n\nTax \ufffd10%\ufffd $45.00\n\nTotal Due $495.00\n\nSample Invoice\n\n**** To\n\nItems\n\nNotes\n\nPayment is due within 14 days.\n\nPlease reference the invoice number when making payment.\n\nFor questions, contact ************************** or call **************.\n\nmailto:*****************************\nmailto:**************************\n\n\nThank you for your business!\n\n\n",
+#       "merged_content": "\nINVOICE\n\nInvoice Number: INV\ufffd2025\ufffd001\n\nInvoice Date: 2025\ufffd07\ufffd17\n\nDue Date: 2025\ufffd07\ufffd31\n\nCompany Name: Greenfield Technologies\n\nContact Name: John Smith\n\nAddress: 123 Technology Ave, Suite 400\n\nCity: New York\n\nState: NY\n\nZIP\ufffd 10001\n\nEmail: john.smith@greenfieldtech.com\n\n# Description Quantity Unit Price Total\n\n1 Cloud Storage \ufffd100GB\ufffd 2 $50.00 $100.00\n\n2 Data Analysis Service 10 $20.00 $200.00\n\n3 Custom Reporting 1 $150.00 $150.00\n\n---------------- -----------\n\nSubtotal $450.00\n\nTax \ufffd10%\ufffd $45.00\n\nTotal Due $495.00\n\nSample Invoice\n\nBill To\n\nItems\n\nNotes\n\nPayment is due within 14 days.\n\nPlease reference the invoice number when making payment.\n\nFor questions, contact accounting@yourservice.com or call \ufffd555\ufffd 123\ufffd4567.\n\nmailto:john.smith@greenfieldtech.com\nmailto:accounting@yourservice.com\n\n\nThank you for your business!\n\n\n",
+#       "text": [],
+#       "layoutText": [],
+#       "pii_entities": [
+#         {
+#           "text": "2025\ufffd07\ufffd17",
+#           "type": "DateTime",
+#           "subtype": "Date",
+#           "offset": 54,
+#           "length": 10,
+#           "score": 0.83
+#         },
+#         {
+#           "text": "2025\ufffd07\ufffd31",
+#           "type": "DateTime",
+#           "subtype": "Date",
+#           "offset": 76,
+#           "length": 10,
+#           "score": 0.89
+#         },
+#         {
+#           "text": "Greenfield Technologies",
+#           "type": "Organization",
+#           "subtype": null,
+#           "offset": 102,
+#           "length": 23,
+#           "score": 1.0
+#         },
+#         {
+#           "text": "John Smith",
+#           "type": "Person",
+#           "subtype": null,
+#           "offset": 141,
+#           "length": 10,
+#           "score": 1.0
+#         },
+#         {
+#           "text": "123 Technology Ave, Suite 400",
+#           "type": "Address",
+#           "subtype": null,
+#           "offset": 162,
+#           "length": 29,
+#           "score": 1.0
+#         },
+#         {
+#           "text": "ZIP\ufffd 10001",
+#           "type": "Address",
+#           "subtype": null,
+#           "offset": 220,
+#           "length": 10,
+#           "score": 0.84
+#         },
+#         {
+#           "text": "john.smith@greenfieldtech.com",
+#           "type": "Email",
+#           "subtype": null,
+#           "offset": 239,
+#           "length": 29,
+#           "score": 0.8
+#         },
+#         {
+#           "text": "Bill",
+#           "type": "Person",
+#           "subtype": null,
+#           "offset": 535,
+#           "length": 4,
+#           "score": 0.97
+#         },
+#         {
+#           "text": "accounting@yourservice.com",
+#           "type": "Email",
+#           "subtype": null,
+#           "offset": 671,
+#           "length": 26,
+#           "score": 0.8
+#         },
+#         {
+#           "text": "\ufffd555\ufffd 123\ufffd4567",
+#           "type": "PhoneNumber",
+#           "subtype": null,
+#           "offset": 706,
+#           "length": 14,
+#           "score": 1.0
+#         },
+#         {
+#           "text": "john.smith@greenfieldtech.com",
+#           "type": "Email",
+#           "subtype": null,
+#           "offset": 730,
+#           "length": 29,
+#           "score": 0.8
+#         },
+#         {
+#           "text": "accounting@yourservice.com",
+#           "type": "Email",
+#           "subtype": null,
+#           "offset": 767,
+#           "length": 26,
+#           "score": 0.8
+#         }
+#       ]
+#     }
+#   ]
+# }
+
+
