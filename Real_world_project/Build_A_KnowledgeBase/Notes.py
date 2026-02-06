@@ -32,6 +32,19 @@
 
 # Sample Python code to interact with the knowledge base is on file cloudxeus_support_bot.py in this folder
 
+# ****** Azure Functions *******
+# Now our python code is only running locally, we can also deploy this code as an Azure Function and make it available as a web service
+# On Azure portal , create a new "Function App" resource
+# Select "App Service" plan type as "Consumption (Serverless)"
+
+# ****** Installing Azure functions python package ******
+# pip install azure-functions
+
+# ****** function_app.py ******
+# this is the code for the Azure Function that will interact with the knowledge base
+
+
+
 
 
 
