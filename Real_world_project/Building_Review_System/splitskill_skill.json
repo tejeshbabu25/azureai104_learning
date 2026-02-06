@@ -1,0 +1,55 @@
+{
+  "@odata.etag": "\"0x8DDEBE83FB6C287\"",
+  "name": "sentiment-skillset",
+  "description": "Skillset to enrich documents with sentiment analysis",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+      "name": "split-skill",
+      "description": "Split the document content into sentences",
+      "context": "/document",
+      "defaultLanguageCode": "en",
+      "textSplitMode": "sentences",
+      "maximumPageLength": 500,
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "textItems",
+          "targetName": "sentences"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.V3.SentimentSkill",
+      "name": "sentiment-skill",
+      "description": "Detects the sentiment of the document text",
+      "context": "/document/sentences/*",
+      "defaultLanguageCode": "en",
+      "includeOpinionMining": false,
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/sentences/*",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sentiment",
+          "targetName": "sentimentScore"
+        }
+      ]
+    }
+  ],
+  "cognitiveServices": {
+    "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+    "description": "Cognitive Services resource",
+    "key": "<redacted>"
+  }
+}

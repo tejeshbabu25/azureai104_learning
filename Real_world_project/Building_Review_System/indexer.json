@@ -1,0 +1,36 @@
+{
+  "name": "sentiment-indexer",
+  "dataSourceName": "azureblob-1755686010491-datasource",
+  "targetIndexName": "sentiment-index",
+  "schedule": {
+    "interval": "PT2H",
+    "startTime": "2025-08-20T00:00:00Z"
+  },
+  "parameters": {
+    "configuration": {
+      "dataToExtract": "contentAndMetadata",
+      "parsingMode": "default"
+    }
+  },
+  "fieldMappings": [
+    {
+      "sourceFieldName": "metadata_storage_name",
+      "targetFieldName": "id",
+      "mappingFunction": { "name": "base64Encode" }
+    }
+  ],
+  "outputFieldMappings": [
+    {
+      "sourceFieldName": "/document/content",
+      "targetFieldName": "content"
+    },
+    {
+      "sourceFieldName": "/document/metadata_storage_name",
+      "targetFieldName": "metadata_storage_name"
+    },
+    {
+      "sourceFieldName": "/document/metadata_storage_path",
+      "targetFieldName": "metadata_storage_path"
+    }
+  ]
+}
