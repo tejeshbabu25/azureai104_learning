@@ -126,6 +126,60 @@
 #   ]
 # }
 
+# *** Defining Table projections ***
+# Under Skillsets -> Add another skills known as shaper skill of type "Microsoft.Skills.Util.V3.ShaperSkill" to shape the output of the indexer to match the schema of the target index
+# edit existing skillset below Shaperskill and table project under knowledgestore section as below
 
+# {
+#       "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+#       "name": "shape-sentence-row",
+#       "description": "Turn each sentence into a row object for table projection",
+#       "context": "/document/sentences/*",
+#       "inputs": [
+#         {
+#           "name": "docName",
+#           "source": "/document/metadata_storage_name"
+#         },
+#         {
+#           "name": "sentence",
+#           "source": "/document/sentences/*"
+#         },
+#         {
+#           "name": "score",
+#           "source": "/document/sentences/*/sentimentScore"
+#         }
+#       ],
+#       "outputs": [
+#         {
+#           "name": "output",
+#           "targetName": "row"
+#         }
+#       ]
+#     }
 
+#  "knowledgeStore": {
+#     "storageConnectionString": "<take value from storage account -> access keys -> connection string>",
+#     "projections": [
+#       {
+#         "tables": [
+#           {
+#             "tableName": "SentenceSentiment",
+#             "generatedKeyName": "rowId",
+#             "source": "/document/sentences/*/row",
+#             "inputs": []
+#           }
+#         ],
+#         "objects": [],
+#         "files": []
+#       }
+#     ],
+#     "parameters": {
+#       "synthesizeGeneratedKeyName": true
+#     }
+#   }
 
+# once saved reset sentiment-indexer and run it
+# now we will have a new Table "SentenceSentiment" under "Data Storage -> Tables"
+# also, Storage browser -> Tables - > click on newly created SentenceSentiment and we can
+#  see the table created for each row from reviews.txt file in table format
+# full json file can be found on tableProjections_skill.json

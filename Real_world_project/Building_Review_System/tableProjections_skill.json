@@ -1,0 +1,101 @@
+{
+  "@odata.etag": "\"0x8DDEBEBC3E47C27\"",
+  "name": "sentiment-skillset",
+  "description": "Skillset to enrich documents with sentiment analysis",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+      "name": "split-skill",
+      "description": "Split the document content into sentences",
+      "context": "/document",
+      "defaultLanguageCode": "en",
+      "textSplitMode": "sentences",
+      "maximumPageLength": 500,
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "textItems",
+          "targetName": "sentences"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.V3.SentimentSkill",
+      "name": "sentiment-skill",
+      "description": "Detects the sentiment of the document text",
+      "context": "/document/sentences/*",
+      "defaultLanguageCode": "en",
+      "includeOpinionMining": false,
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/sentences/*",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "sentiment",
+          "targetName": "sentimentScore"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+      "name": "shape-sentence-row",
+      "description": "Turn each sentence into a row object for table projection",
+      "context": "/document/sentences/*",
+      "inputs": [
+        {
+          "name": "docName",
+          "source": "/document/metadata_storage_name"
+        },
+        {
+          "name": "sentence",
+          "source": "/document/sentences/*"
+        },
+        {
+          "name": "score",
+          "source": "/document/sentences/*/sentimentScore"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "targetName": "row"
+        }
+      ]
+    }
+  ],
+  "cognitiveServices": {
+    "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+    "description": "Cognitive Services resource",
+    "key": "<redacted>"
+  },
+  "knowledgeStore": {
+    "storageConnectionString": "<take value from storage account -> access keys -> connection string>",
+    "projections": [
+      {
+        "tables": [
+          {
+            "tableName": "SentenceSentiment",
+            "generatedKeyName": "rowId",
+            "source": "/document/sentences/*/row",
+            "inputs": []
+          }
+        ],
+        "objects": [],
+        "files": []
+      }
+    ],
+    "parameters": {
+      "synthesizeGeneratedKeyName": true
+    }
+  }
+}
