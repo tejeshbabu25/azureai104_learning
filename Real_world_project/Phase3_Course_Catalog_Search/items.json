@@ -1,0 +1,46 @@
+{
+  "courseId": "AZ-104",
+  "name": "AZ-104: Microsoft Azure Administrator Associate",
+  "description": "Learn how to manage Azure identities, governance, storage, compute, and virtual networks in a cloud environment.",
+  "price": 129.0,
+  "category": "Azure Administration"
+}
+
+
+{
+  "courseId": "DP-900",
+  "name": "DP-900: Microsoft Azure Data Fundamentals",
+  "description": "Understand core data concepts and how to work with relational, non-relational, and analytics workloads in Azure.",
+  "price": 99.0,
+  "category": "Data Fundamentals"
+}
+
+
+{
+  "courseId": "AI-900",
+  "name": "AI-900: Microsoft Azure AI Fundamentals",
+  "description": "Gain knowledge of fundamental AI and machine learning concepts and explore Azure AI services.",
+  "price": 99.0,
+  "category": "AI Fundamentals"
+}
+
+{
+  "courseId": "AI-102",
+  "name": "AI-102: Designing and Implementing an Azure AI Solution",
+  "description": "Develop skills to build, manage, and deploy AI solutions using Azure Cognitive Services, Azure Cognitive Search, and Azure Bot Services.",
+  "price": 149.0,
+  "category": "AI Engineer"
+}
+
+```json
+{
+  "courseId": "AZ-305",
+  "name": "AZ-305: Designing Microsoft Azure Infrastructure Solutions",
+  "description": "Learn to design secure, scalable, and reliable solutions on Azure, focusing on governance, storage, compute, and networking.",
+  "price": 159.0,
+  "category": "Azure Architect"
+}
+
+```
+
+
